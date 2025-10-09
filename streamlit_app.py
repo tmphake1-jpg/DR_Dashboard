@@ -823,7 +823,8 @@ with strategy_tester:
         part_win_count = len(part_win_df.index)
 
         win_rate = (part_win_count + tp_count) / trade_count
-        target_tp = abs(buy_in - tp) / abs(buy_in - sl)
+        risk_unit = abs(buy_in - sl)
+        target_tp = abs(buy_in - tp) / risk_unit
 
         trades, hit_tp, hit_sl, part_tp, part_sl = st.columns(5)
 
@@ -843,11 +844,29 @@ with strategy_tester:
         with winrate:
             st.metric("Winrate", f"{win_rate:.1%}")
         with profit_factor:
-            win_r = (tp_count * target_tp) + (abs(part_win_df.session_close_level - buy_in).sum())
-            loss_r = (sl_count + abs(part_loss_df.session_close_level - buy_in).sum())
+            if np.isclose(risk_unit, 0):
+                part_win_r_sum = 0.0
+                part_loss_r_sum = 0.0
+            else:
+                if orb_side == "Long":
+                    part_win_r_values = (part_win_df.session_close_level - buy_in) / risk_unit
+                    part_loss_r_values = (buy_in - part_loss_df.session_close_level) / risk_unit
+                else:
+                    part_win_r_values = (buy_in - part_win_df.session_close_level) / risk_unit
+                    part_loss_r_values = (part_loss_df.session_close_level - buy_in) / risk_unit
 
-            profit_fact = win_r / loss_r
-            st.metric("Proft Factor:", f"{profit_fact: .2f}")
+                part_win_r_sum = part_win_r_values.clip(lower=0).sum()
+                part_loss_r_sum = part_loss_r_values.clip(lower=0).sum()
+
+            win_r = (tp_count * target_tp) + part_win_r_sum
+            loss_r = sl_count + part_loss_r_sum
+
+            if np.isclose(loss_r, 0):
+                st.metric("Proft Factor:", "N/A")
+                st.info("Profit factor cannot be calculated because total loss R equals zero.")
+            else:
+                profit_fact = win_r / loss_r
+                st.metric("Proft Factor:", f"{profit_fact: .2f}")
 
         with target_rr:
             st.metric("Target Risk Multiple", f"{target_tp:.2f}")
