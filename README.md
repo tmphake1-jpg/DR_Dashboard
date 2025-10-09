@@ -1,81 +1,80 @@
 # Opening Range Breakout Dashboard
 
-Dieses Repository enthält eine interaktive Streamlit-Anwendung zur Analyse von Opening-Range-Breakout-Strategien (ORB) für verschiedene Futures- und FX-Märkte. Das Dashboard unterstützt Trader dabei, historische Sitzungsdaten zu untersuchen, Wahrscheinlichkeiten zu bewerten und eigene Handelsannahmen anhand statistischer Kennzahlen und Machine-Learning-Ausgaben zu prüfen.
+This repository contains an interactive Streamlit application for analyzing Opening Range Breakout (ORB) strategies across various futures and FX markets. The dashboard helps traders review historical session data, assess probabilities, and validate their trading assumptions using statistical metrics and machine-learning outputs.
 
-## Hauptfunktionen
+## Key Features
 
-- **Interaktive Filter**: Auswahl von Symbol, Handelssession (New York, London, Tokio) und Opening-Range-Dauer (30 oder 60 Minuten) sowie zusätzliche Filter nach Wochentag, Monat oder Jahr.
-- **Breakout-Statistiken**: Kennzahlen zu Range-Breakouts, Range-Holds, Retracements, Expansions und Schlusskursen außerhalb der Opening Range.
-- **Verteilungsanalysen**: Visualisierungen mit Plotly für Breakout-Fenster, Retracement- und Expansionslevel inklusive kumulativer Wahrscheinlichkeitslinien.
-- **Modellübersicht**: Darstellung der erkannten Session-Modelle (z. B. Strong Uptrend, Expansion) inklusive Bildmaterial und Szenarioanalyse basierend auf vergangenen Sitzungen.
-- **Strategie-Backtesting**: Einfache Parametrisierung von Einstiegs-, Ausstiegs- und Stoppregeln, um die ausgewählten Filtereinstellungen historisch zu testen.
-- **Machine-Learning-Bereich**: Laden vorkonfigurierter Modelle und Skalierer zur Einschätzung der aktuellen Session anhand gespeicherter Pickle-Dateien.
-- **Datentransformationen**: `orb_calculations.py` erzeugt und aktualisiert die zugrundeliegenden CSV-Datensätze auf Basis von 5-Minuten-Kerzen.
+- **Interactive filters**: Choose the symbol, trading session (New York, London, Tokyo), Opening Range duration (30 or 60 minutes), and refine the dataset by weekday, month, or year.
+- **Breakout statistics**: Track metrics for range breakouts, range holds, retracements, expansions, and closes outside the Opening Range.
+- **Distribution analytics**: Plotly visualizations for breakout windows, retracement and expansion levels, including cumulative probability curves.
+- **Session model overview**: Display of detected session models (e.g., Strong Uptrend, Expansion) with illustrative images and scenario analysis derived from past sessions.
+- **Strategy backtesting**: Configure entry, exit, and stop parameters to evaluate historical performance based on the selected filters.
+- **Machine-learning insights**: Load preconfigured models and scalers to classify the current session using persisted pickle files.
+- **Data transformations**: `orb_calculations.py` builds and updates the underlying CSV datasets from 5-minute candles.
 
-## Projektstruktur
+## Project Structure
 
 ```
 DR_Dashboard/
-├── data/                 # CSV-Dateien für Symbole, Sessions und Opening-Range-Dauer
-├── ml_models/            # Trainierte ML-Modelle und Skalierer (.pickle)
-├── pictures/             # Grafiken zur Modellbeschreibung im Dashboard
-├── session_models/       # Zusätzliche Session-Modelldaten
-├── streamlit_app.py      # Hauptanwendung des Dashboards
-├── orb_calculations.py   # Skript zur Erstellung/Aktualisierung der Datensätze
-├── ml_models.py          # Hilfsfunktionen für ML-Workflows
-└── README.md             # Dieses Dokument
+├── data/                 # CSV files grouped by symbol, session, and Opening Range duration
+├── ml_models/            # Trained ML models and scalers (.pickle)
+├── pictures/             # Images used to describe session models inside the dashboard
+├── session_models/       # Additional data describing session models
+├── streamlit_app.py      # Main Streamlit application
+├── orb_calculations.py   # Script to create or update ORB datasets
+├── ml_models.py          # Helper functions for ML workflows
+└── README.md             # This document
 ```
 
-## Voraussetzungen
+## Prerequisites
 
-- Python 3.10 oder neuer (empfohlen)
-- Virtuelle Umgebung (z. B. `venv` oder `conda`)
-- Installierte Abhängigkeiten: `streamlit`, `pandas`, `numpy`, `plotly`, `polars`, `scikit-learn` (für ML), `python-dateutil` sowie Standardbibliotheken.
+- Python 3.10 or newer (recommended)
+- Virtual environment (e.g., `venv` or `conda`)
+- Installed dependencies: `streamlit`, `pandas`, `numpy`, `plotly`, `polars`, `scikit-learn`, `python-dateutil`, plus any requirements of your ML models.
 
-> **Hinweis:** Ergänzen Sie weitere Pakete entsprechend Ihrer lokalen Umgebung und den verwendeten ML-Modellen.
+> **Note:** Add further packages according to your local environment and modeling workflow.
 
-## Installation & Start
+## Installation & Launch
 
-1. Repository klonen:
+1. Clone the repository:
    ```bash
    git clone <repo-url>
    cd DR_Dashboard
    ```
-2. Virtuelle Umgebung anlegen und aktivieren:
+2. Create and activate a virtual environment:
    ```bash
    python -m venv .venv
    source .venv/bin/activate  # Windows: .venv\Scripts\activate
    ```
-3. Abhängigkeiten installieren:
+3. Install dependencies:
    ```bash
    pip install -r requirements.txt
    ```
-   Falls keine `requirements.txt` vorhanden ist, installieren Sie die benötigten Pakete manuell.
-4. Streamlit-App starten:
+   If no `requirements.txt` is available, install the necessary packages manually.
+4. Start the Streamlit app:
    ```bash
    streamlit run streamlit_app.py
    ```
-5. Öffnen Sie den angezeigten lokalen URL im Browser, um das Dashboard zu verwenden.
+5. Open the displayed local URL in your browser to use the dashboard.
 
-## Datenquellen & -format
+## Data Sources & Format
 
-- Die CSV-Dateien in `data/` werden mit Semikolon (`;`) getrennt und nutzen einen Datumsindex.
-- Zeitstempel (z. B. `breakout_time`, `max_retracement_time`, `max_expansion_time`) sind in Mikrosekunden gespeichert und werden in der App in die entsprechende Zeitzone (`America/New_York`) konvertiert.
-- `orb_calculations.py` kann genutzt werden, um aus Rohdaten (5-Minuten-Candles) neue ORB-Datensätze zu generieren oder bestehende zu aktualisieren.
+- CSV files in `data/` are semicolon-separated (`;`) and use a date index.
+- Timestamps (e.g., `breakout_time`, `max_retracement_time`, `max_expansion_time`) are stored in microseconds and converted to the appropriate time zone (`America/New_York`) inside the app.
+- Use `orb_calculations.py` to generate new ORB datasets from raw 5-minute candle data or to refresh existing files.
 
-## Machine-Learning-Modelle
+## Machine-Learning Models
 
-- Modelle und Skalierer werden als Pickle-Dateien in `ml_models/` erwartet. Die Benennung folgt dem Muster `<symbol>_<session>_simple_confirmation_bias_model.pickle`.
-- Beim Laden prüft die App automatisch, ob für das gewählte Symbol und die Session ein passendes Modell vorhanden ist.
-- Nutzen Sie `ml_models.py`, um Training, Evaluierung und Export eigener Modelle zu organisieren.
+- Models and scalers are expected as pickle files inside `ml_models/`, following the naming pattern `<symbol>_<session>_simple_confirmation_bias_model.pickle`.
+- The app automatically checks whether a matching model exists for the selected symbol and session.
+- Leverage `ml_models.py` to organize training, evaluation, and export of custom models.
 
-## Weiterentwicklung
+## Further Development
 
-- Ergänzen Sie zusätzliche Symbole oder Sessions, indem Sie entsprechende CSV-Datensätze hinzufügen.
-- Integrieren Sie neue Visualisierungen (Plotly) oder Metriken direkt in `streamlit_app.py`.
-- Passen Sie die Strategie-Backtesting-Regeln an, um spezifische Handelslogiken abzubilden.
+- Add additional symbols or sessions by contributing new CSV datasets.
+- Extend `streamlit_app.py` with new Plotly visualizations or metrics.
+- Adapt the strategy backtester to model your specific trading rules.
 
 ## Support
 
-Bei Fragen oder Verbesserungsvorschlägen eröffnen Sie bitte ein Issue oder erstellen Sie einen Pull Request.
-
+If you have questions or suggestions, please open an issue or submit a pull request.

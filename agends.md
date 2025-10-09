@@ -1,22 +1,21 @@
-# Projektagenda
+# Project Agenda
 
-Dieses Dokument fasst offene Aufgaben und mögliche nächste Schritte für die Weiterentwicklung des Opening Range Breakout Dashboards zusammen.
+This document outlines outstanding tasks and potential next steps for enhancing the Opening Range Breakout Dashboard.
 
-## Kurzfristige Aufgaben
+## Short-Term Tasks
 
-- [ ] `requirements.txt` erstellen oder aktualisieren, um alle notwendigen Python-Abhängigkeiten eindeutig zu dokumentieren.
-- [ ] Beispiel-Datensätze im Verzeichnis `data/` bereitstellen, damit neue Nutzerinnen und Nutzer die App ohne zusätzliche Vorbereitung testen können.
-- [ ] Dokumentation zum Machine-Learning-Workflow in `ml_models.py` ergänzen (Trainingsablauf, Evaluationsmetriken, Export der Pickle-Dateien).
+- [ ] Create or update `requirements.txt` to document all necessary Python dependencies.
+- [ ] Provide sample datasets in the `data/` directory so new users can test the app without additional preparation.
+- [ ] Expand the machine-learning documentation in `ml_models.py`, covering the training workflow, evaluation metrics, and pickle export process.
 
-## Mittelfristige Ideen
+## Mid-Term Ideas
 
-- [ ] Erweiterung des Strategie-Backtesters um Risiko-/Money-Management-Kennzahlen (z. B. maximaler Drawdown, Sharpe Ratio).
-- [ ] Integration eines automatisierten Datenimports (z. B. über eine Datenbank oder eine API), um die CSV-Dateien aktuell zu halten.
-- [ ] Mehrsprachige Unterstützung innerhalb der Streamlit-App (Deutsch/Englisch).
+- [ ] Extend the strategy backtester with risk and money management metrics (e.g., maximum drawdown, Sharpe ratio).
+- [ ] Integrate an automated data ingestion pipeline (database or API) to keep the CSV files current.
+- [ ] Add multilingual support (English/German) within the Streamlit app.
 
-## Langfristige Vision
+## Long-Term Vision
 
-- [ ] Aufbau eines kontinuierlichen Trainingsprozesses für die Machine-Learning-Modelle inklusive Modellbewertung und Versionierung.
-- [ ] Bereitstellung eines Deployment-Setups (Docker oder Cloud), um das Dashboard produktiv hosten zu können.
-- [ ] Entwicklung zusätzlicher Module für verwandte Handelsstrategien (z. B. VWAP-Reversion, Opening-Drive).
-
+- [ ] Build a continuous training pipeline for machine-learning models, including evaluation and versioning.
+- [ ] Provide a deployment setup (Docker or cloud) to host the dashboard in production.
+- [ ] Develop additional modules for related trading strategies (e.g., VWAP reversion, opening drive).
